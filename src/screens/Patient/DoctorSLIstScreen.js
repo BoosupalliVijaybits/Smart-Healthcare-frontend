@@ -9,8 +9,8 @@ const PatientDoctorListScreen = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
-  // Api
   const [getAllDoctor] = useLazyAlldoctorsQuery();
 
   const getDoctorsFun = () => {
@@ -18,7 +18,6 @@ const PatientDoctorListScreen = () => {
     getAllDoctor()
       .unwrap()
       .then((res) => {
-        console.log("listRess", res);
         const pendingData = res?.filter((item) => item?.status === "APPROVED");
         setData(pendingData);
       })
@@ -34,29 +33,44 @@ const PatientDoctorListScreen = () => {
     getDoctorsFun();
   }, []);
 
+  // Filter doctors by specialization
+  const filteredDoctors = data.filter((doc) =>
+    doc.specialization.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div className="fancy-doctor-list rounded-5 bg-white">
-      <p className="primary mb-4 text-uppercase f3 fs-xxl-19 mb-0 fs-xl-19 fs-lg-18 fs-sm-17 fs-xs-15 textani">
+      <p className="primary mb-4 text-uppercase f3 fs-xxl-19 mb-0">
         👨‍⚕️ Meet Our Specialists
       </p>
+
+      {/* 🔍 Search Bar */}
+      {!loading && filteredDoctors.length > 0 && (
+        <div className="search-bar mb-4 w-100 ac-js">
+          <input
+            type="text"
+            placeholder="Search by specialization..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="search-input"
+          />
+        </div>
+      )}
+
       {loading ? (
         <PageLoad />
-      ) : data?.length == 0 ? (
+      ) : filteredDoctors.length === 0 ? (
         <EmptyScreen img={emptyappoinmrnt} content="Doctors Not Found" />
       ) : (
         <div className="doctor-grid">
-          {data.map((doc) => (
+          {filteredDoctors.map((doc) => (
             <div className="doctor-card2" key={doc.id}>
-              {/* <div className="img-wrap">
-                <img src={doc.image ? doc.image : profilemt} alt={doc.name} />
-              </div> */}
               <h3 className="f1 black">
                 {doc.firstName + " " + doc?.lastName}
               </h3>
               <p className="spec f2">{doc.specialization}</p>
               <p className="hospital f1">{doc.clinicName}</p>
               <p className="location f4 w-90">📍 {doc.clinicAddress}</p>
-              {/* <p className="rating f4">⭐ {doc.rating}</p> */}
               <button
                 onClick={() => {
                   navigate("/patient/doctors/detail", { state: { data: doc } });

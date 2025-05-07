@@ -22,13 +22,14 @@ const TodayAppoinmentScreen = () => {
   // Api
   const [todayAppoinment] = useLazyToday_appoinmentsQuery();
 
-  useEffect(() => {
+ useEffect(() => {
     setLoading(true);
     todayAppoinment()
       .unwrap()
       .then((res) => {
         console.log("Ress", res);
-        setPatientList(res || []);
+        const progress = res?.filter((item) => item?.status !== "COMPLETED");
+        setPatientList(progress || []);
       })
       .catch((err) => {
         console.log("Err", err);

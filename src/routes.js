@@ -65,19 +65,19 @@ const ReactRoute = () => {
   const location = useLocation();
   const token = location?.search;
 
-  // Api
+
   const [notificationApi] = useLazyGetnotificationQuery();
 
-  // Handle sound with user interaction check
+
   useEffect(() => {
     if (localStorage.getItem("hasInteracted")) {
-      // playSound();
+
     }
 
     const handleUserInteraction = () => {
       if (!localStorage.getItem("hasInteracted")) {
         localStorage.setItem("hasInteracted", "true");
-        // playSound();
+
       }
     };
 
@@ -107,7 +107,7 @@ const ReactRoute = () => {
     };
 
     const interval = setInterval(fetchNotifications, 10000);
-    fetchNotifications(); // initial load
+    fetchNotifications();
 
     return () => clearInterval(interval);
   }, [user]);

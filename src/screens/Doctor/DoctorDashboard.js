@@ -26,7 +26,7 @@ const DoctorDashboard = () => {
   const [upcommitAppoinmentApi] = useLazyUpcomming_appoinmentsQuery();
   const [todayAppoinment] = useLazyToday_appoinmentsQuery();
 
-  const upcommingApi = () => {
+const upcommingApi = () => {
     setLoading(true);
     upcommitAppoinmentApi()
       .unwrap()
@@ -35,13 +35,17 @@ const DoctorDashboard = () => {
         const completedData = res?.filter(
           (item) => item?.status == "COMPLETED"
         );
-        setcompletApp(completedData);
-        setUpcommApp(res);
+        const progress = res?.filter((item) => item?.status !== "COMPLETED");
+        setcompletApp(completedData || []);
+        setUpcommApp(progress || []);
         todayAppoinment()
           .unwrap()
           .then((res) => {
             console.log("ToRes", res);
-            setTodayApp(res);
+            const progress = res?.filter(
+              (item) => item?.status !== "COMPLETED"
+            );
+            setTodayApp(progress || []);
           })
           .catch((err) => {
             console.log("Err", err);

@@ -7,7 +7,7 @@ import NetworkErrorScreen from "./screens/Patient/NetworkErrorScreen";
 
 const App = () => {
   const [getNotification] = useLazyGetnotificationQuery();
-  const lastNotificationRef = useRef(null); // Track last notification ID
+  const lastNotificationRef = useRef(null);
   const { user, setUser } = useUser();
   const [isOnline, setIsOnline] = useState(navigator.onLine);
 
@@ -44,16 +44,13 @@ const App = () => {
           const twentySecondsAgo = new Date(now.getTime() - 20000);
           console.log("twentySecondsAgo", twentySecondsAgo);
 
-          // Filter notifications within the last 20 seconds
           const recentNotifications = res.filter((item) => {
             const itemDate = new Date(item.date);
             return itemDate > twentySecondsAgo && itemDate <= now;
           });
 
-          // If no new notifications in that time range, return
           if (!recentNotifications.length) return;
 
-          // Loop through recent notifications
           recentNotifications.forEach((item) => {
             if (lastNotificationRef.current !== item.id) {
               lastNotificationRef.current = item.id;
@@ -75,7 +72,7 @@ const App = () => {
                 icon: logo,
               });
               notification.onclick = () => {
-                window.focus(); // Focus the current tab (optional)
+                window.focus();
                 if (notification_page) {
                   window.location.href = notification_page;
                 }

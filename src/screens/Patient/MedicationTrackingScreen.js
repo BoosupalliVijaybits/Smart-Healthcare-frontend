@@ -17,6 +17,7 @@ const MedicationTrackingScreen = () => {
   const [loading, setLoading] = useState(true);
   const rowsPerPage = 5;
 
+
   const [mypriscription] = useLazyPatientpriscribeviewQuery();
 
   const indexOfLastRow = currentPage * rowsPerPage;
@@ -95,20 +96,21 @@ const MedicationTrackingScreen = () => {
   };
 
   const priscribFun = () => {
-    setLoading(true);
-    mypriscription(user_id)
-      .unwrap()
-      .then((res) => {
-        console.log("prisres", res);
-        setPriscriptions(res || []);
-      })
-      .catch((err) => {
-        console.log("err", err);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  };
+     setLoading(true);
+     mypriscription(user_id)
+       .unwrap()
+       .then((res) => {
+         console.log("prisres", res);
+         const progress = res?.filter((item) => item?.status == "IN_PROGRESS");
+         setPriscriptions(progress || []);
+       })
+       .catch((err) => {
+         console.log("err", err);
+       })
+       .finally(() => {
+         setLoading(false);
+       });
+   };
 
   useEffect(() => {
     priscribFun();

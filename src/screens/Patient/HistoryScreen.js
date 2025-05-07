@@ -129,7 +129,7 @@ const HistoryScreen = () => {
         <div className="medication-container rounded-3">
           <div className="w-100 d-flex  ac-jb mb-3">
             <h2 className="primary text-uppercase f2 fs-xxl-19 mb-0 fs-xl-19 fs-lg-18 fs-sm-17 fs-xs-15 textani title">
-              🩺 History
+              🩺 Medication History
             </h2>
           </div>
           <div className="medication-table">

@@ -22,13 +22,14 @@ const PationtRequestScreen = () => {
   // Api
   const [upcommingAppoinment] = useLazyUpcomming_appoinmentsQuery();
 
-  useEffect(() => {
+useEffect(() => {
     setLoading(true);
     upcommingAppoinment()
       .unwrap()
       .then((res) => {
         console.log("Ress", res);
-        setPatientList(res || []);
+        const progress = res?.filter((item) => item?.status !== "COMPLETED");
+        setPatientList(progress || []);
       })
       .catch((err) => {
         console.log("Err", err);

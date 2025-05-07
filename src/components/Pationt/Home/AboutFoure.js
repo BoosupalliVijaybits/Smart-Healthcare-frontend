@@ -16,27 +16,27 @@ const AboutFoure = () => {
     },
     {
       name: "Jane Smith",
-      feedback: "Very satisfied with the quality.",
+      feedback: "very helpful during emergencies.",
       image: doctor4,
     },
     {
       name: "Sam Wilson",
-      feedback: "Excellent customer support and fast delivery.",
+      feedback: "This platform made it easy for me to find the right doctor and book an appointment in minutes.",
       image: doctor5,
     },
     {
       name: "keerthi",
-      feedback: "Excellent customer support and fast delivery.",
+      feedback: "Excellent customer support.",
       image: doctor2,
     },
     {
       name: "keerthi",
-      feedback: "Excellent customer support and fast delivery.",
+      feedback: "Medication tracking is really useful feature.",
       image: doctor2,
     },
     {
       name: "keerthi",
-      feedback: "Excellent customer support and fast delivery.",
+      feedback: "The system makes it easy to manage appointments and prescriptions saves time and improves how we treat patients.",
       image: doctor2,
     },
   ];
